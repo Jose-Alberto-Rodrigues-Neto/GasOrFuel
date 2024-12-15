@@ -95,7 +95,7 @@ fun MainPage(modifier: Modifier) {
                 ){
                     Image(
                         modifier = Modifier.fillMaxWidth(),
-                        painter = painterResource(R.drawable.banner_image),
+                        painter = painterResource(R.drawable.image_banner),
                         contentDescription = "Imagem do App"
                     )
                     if (result.isNotBlank()) {
