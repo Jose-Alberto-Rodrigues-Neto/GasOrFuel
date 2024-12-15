@@ -1,48 +1,44 @@
-# Índice de Combustíveis – App Android
+# índice de Combustíveis
 
-Este projeto é um aplicativo Android que ajuda os usuários a registrar e comparar os preços de álcool e gasolina de postos de combustíveis. O objetivo é permitir que o usuário decida qual combustível é mais vantajoso com base nos valores inseridos.
+`⚡ Índice de Combustíveis: Economize escolhendo o melhor combustível!`
+
+**Índice de Combustíveis** é um aplicativo Android desenvolvido em **Kotlin**, projetado para ajudar os usuários a comparar os preços de álcool e gasolina de forma rápida e eficiente. Com uma interface intuitiva, o aplicativo calcula qual combustível é mais vantajoso com base nos valores inseridos.
 
 ## Faça Download do aplicativo
 
 [![](https://markdown-videos-api.jorgenkh.no/youtube/_wL90vErURQ)](https://drive.google.com/file/d/1xm0O8nlsI8hIIbs8wfotJjL2PlxAsDZ2/view?usp=sharing)
 
-## Funcionalidades
+## 🚀 Como Usar
 
-- Inserção de preços de álcool e gasolina para diferentes postos.
-- Cálculo automático para sugerir qual combustível é mais vantajoso (baseado na relação de 70%, ou 75%).
-- Interface intuitiva e responsiva desenvolvida com **Jetpack Compose**.
-- Design consistente utilizando **Material Theme Builder**.
+1. Insira os valores de álcool e gasolina para um posto de combustível.
+2. Escolha entre a conversão do álcool, 70% ou 75%
+3. O aplicativo indicará qual combustível é mais vantajoso, baseado na relação selecionada pelo usuário.
+4. Repita o processo para diferentes postos e escolha a melhor opção para você!
 
-## Tecnologias Utilizadas
+## 🔧 Tecnologias Utilizadas
 
-- **Kotlin**: Linguagem principal para o desenvolvimento Android.
-- **Android Studio**: Ambiente de desenvolvimento integrado (IDE).
-- **Jetpack Compose**: Framework moderno para criação de interfaces declarativas no Android.
-- **Material Theme Builder**: Ferramenta para criar temas customizados com base nas diretrizes Material Design.
+- **Kotlin**: Linguagem principal para o desenvolvimento do aplicativo.
+- **Android Studio**: Ambiente de desenvolvimento integrado.
+- **Jetpack Compose**: Framework moderno para criação de interfaces.
+- **Material Theme Builder**: Customização de temas com base nas diretrizes do Material Design.
 
-## Como Executar o Projeto
+## 🔄 Instalação e Configuração
 
 1. Clone este repositório:
-
    ```bash
    git clone https://github.com/Jose-Alberto-Rodrigues-Neto/GasOrFuel.git
    ```
-
 2. Abra o projeto no **Android Studio**.
+3. Conecte um dispositivo físico ou inicie um emulador.
+4. Execute o aplicativo clicando em "Run".
 
-3. Certifique-se de que você tenha um emulador configurado ou um dispositivo Android conectado.
-
-4. Sincronize as dependências do projeto no Android Studio.
-
-5. Execute o aplicativo clicando em **Run**
-
-## Capturas de Tela
+## 📸 Screenshots
 
 ![image](https://github.com/user-attachments/assets/e4037ecb-6e79-4dc7-bb5c-3c2d24ed5304)
 
 ![image](https://github.com/user-attachments/assets/9999f5aa-5c7c-42a2-ada1-7370ed18b4a0)
 
+---
 
-
-Espero que este aplicativo seja útil para você tomar decisões mais conscientes na hora de abastecer! 🚗⛽
+Aproveite para economizar no abastecimento com o **Índice de Combustíveis**! 🚗⛽
 
