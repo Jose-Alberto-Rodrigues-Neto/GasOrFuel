@@ -95,7 +95,7 @@ fun MainPage(modifier: Modifier) {
                 ){
                     Image(
                         modifier = Modifier.fillMaxWidth(),
-                        painter = painterResource(R.drawable.um_posto_de_gasolina_com_os_valores_da_gasolina_e_do__lcool_real_ados),
+                        painter = painterResource(R.drawable.banner_image),
                         contentDescription = "Imagem do App"
                     )
                     if (result.isNotBlank()) {
