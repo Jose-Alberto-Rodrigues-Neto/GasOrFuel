@@ -25,7 +25,7 @@ Este projeto é um aplicativo Android que ajuda os usuários a registrar e compa
 1. Clone este repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/indice-combustiveis.git
+   git clone https://github.com/Jose-Alberto-Rodrigues-Neto/GasOrFuel.git
    ```
 
 2. Abra o projeto no **Android Studio**.
