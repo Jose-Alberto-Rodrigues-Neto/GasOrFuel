@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,9 +23,11 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -70,6 +74,7 @@ fun calcValue(gasPrice: Float, alcoholPrice: Float, percent: Int): String {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainPage(modifier: Modifier) {
@@ -94,11 +99,23 @@ fun MainPage(modifier: Modifier) {
                     modifier = Modifier.fillMaxWidth()
                 ){
                     Image(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth(),
                         painter = painterResource(R.drawable.image_banner),
                         contentDescription = "Imagem do App"
                     )
                     if (result.isNotBlank()) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(top = 300.dp)
+                                .background(
+                                    color = Color.Black.copy(alpha = 0.5f),
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                                .padding(14.dp)
+                        )
                         Text(
                             text = result,
                             color = Color.White,
@@ -110,22 +127,24 @@ fun MainPage(modifier: Modifier) {
                         )
                     }
                 }
-                OutlinedTextField(
+                InputFieldThemeAdaptive(
                     value = alcoholInput,
                     onValueChange = { alcoholInput = it },
-                    label = { Text("Insira o preço do álcool/litro", style = AppTypography.labelLarge) },
+                    label = "Insira o preço do álcool/litro",
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
-                OutlinedTextField(
+
+                InputFieldThemeAdaptive(
                     value = gasInput,
                     onValueChange = { gasInput = it },
-                    label = { Text("Insira o preço da gasolina/litro", style = AppTypography.labelLarge) },
+                    label = "Insira o preço da gasolina/litro",
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
-                OutlinedTextField(
+
+                InputFieldThemeAdaptive(
                     value = namePost,
                     onValueChange = { namePost = it },
-                    label = { Text("Insira o nome do posto", style = AppTypography.labelLarge) }
+                    label = "Insira o nome do posto"
                 )
                 Row(
                     modifier = Modifier,
@@ -189,6 +208,31 @@ fun MyTopBar() {
         ),
     )
 }
+@Composable
+fun InputFieldThemeAdaptive(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+) {
+    val isDarkTheme = isSystemInDarkTheme()
+
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label, style = AppTypography.labelLarge) },
+        keyboardOptions = keyboardOptions,
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = if (isDarkTheme) Color.White else Color.Black,
+            unfocusedTextColor = if (isDarkTheme) Color.White else Color.Black,
+            focusedContainerColor = if (isDarkTheme) Color.DarkGray else MaterialTheme.colorScheme.surface,
+            unfocusedContainerColor = if (isDarkTheme) Color.DarkGray else MaterialTheme.colorScheme.surface,
+            focusedBorderColor = if (isDarkTheme) Color.White else Color.Black,
+            unfocusedBorderColor = if (isDarkTheme) Color.LightGray else Color.Black
+        )
+    )
+}
+
 
 @Preview(showBackground = true)
 @Composable
