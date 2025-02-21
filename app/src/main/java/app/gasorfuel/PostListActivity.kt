@@ -27,6 +27,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.gasorfuel.manager.GasStationManager
 import app.gasorfuel.model.GasStation
@@ -41,7 +42,7 @@ class PostListActivity : ComponentActivity() {
                 Scaffold(
                     topBar = {
                         TopAppBar(
-                            title = { Text("Lista de Postos") }
+                            title = { Text(stringResource(R.string.stations_list)) }
                         )
                     },
                     content = { innerPadding ->
@@ -85,15 +86,15 @@ fun PostListScreen(modifier: Modifier) {
                             .padding(16.dp)
                     ) {
                         Text(
-                            text = "Nome: ${post.name}",
+                            text = "${stringResource(R.string.txt_nome)}: ${post.name}",
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Text(
-                            text = "Gasolina: R$${post.gasPrice}",
+                            text = "${stringResource(R.string.txt_gas)}: R$${post.gasPrice}",
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Text(
-                            text = "Álcool: R$${post.alcoholPrice}",
+                            text = "${stringResource(R.string.txt_alc)}: R$${post.alcoholPrice}",
                             style = MaterialTheme.typography.bodyMedium
                         )
 
@@ -114,7 +115,7 @@ fun PostListScreen(modifier: Modifier) {
                                     modifier = Modifier
                                         .fillMaxWidth()
                                 ) {
-                                    Text(text = "Editar")
+                                    Text(text = stringResource(R.string.txt_edit))
                                 }
 
                                 Button(
@@ -123,7 +124,7 @@ fun PostListScreen(modifier: Modifier) {
                                         .fillMaxWidth()
                                         .padding(top = 8.dp)
                                 ) {
-                                    Text(text = "Deletar")
+                                    Text(text = stringResource(R.string.txt_deletar))
                                 }
                             }
                         }

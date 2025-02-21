@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">GasOrFuel</string>
+    <string name="app_name">Gásolina ou Álcool</string>
+    <string name="btn_save">Salvar</string>
+    <string name="txt_preco_alcool">Preço Álcool</string>
+    <string name="txt_preco_gas">Preço Gasolina</string>
+    <string name="txt_nome">Nome</string>
+    <string name="txt_creation_date">Data de criação:</string>
+    <string name="btn_edit">Editar Posto</string>
+    <string name="alcool_respone">Álcool é mais rentável</string>
+    <string name="gasoline_response">Gasolina é mais rentável</string>
+    <string name="app_image">Imagem do App</string>
+    <string name="field_inert_alc">Insira o preço do álcool/litro</string>
+    <string name="field_insert_gas">Insira o preço da gasolina/litro</string>
+    <string name="field_insert_post_name">Insira o nome do posto</string>
+    <string name="txt_calc">Calcular</string>
+    <string name="see_list">Ver Lista</string>
+    <string name="stations_list">Lista de Postos</string>
+    <string name="txt_gas">Gasolina</string>
+    <string name="txt_alc">Álcool</string>
+    <string name="txt_edit">Editar</string>
+    <string name="txt_deletar">Deletar</string>
 </resources>

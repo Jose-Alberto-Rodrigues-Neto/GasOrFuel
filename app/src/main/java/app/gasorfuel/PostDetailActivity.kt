@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -46,7 +47,7 @@ class PostDetailActivity : ComponentActivity() {
                 Scaffold(
                     topBar = {
                         TopAppBar(
-                            title = { Text("Editar Posto") }
+                            title = { Text(stringResource(R.string.btn_edit)) }
                         )
                     },
                     content = { paddingValues ->
@@ -93,7 +94,7 @@ fun PostDetailScreen(context: Context, modifier: Modifier, station: GasStation, 
         )
 
         Text(
-            text = "Data de criação: $registrationDate",
+            text = "${stringResource(R.string.txt_creation_date)} $registrationDate",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 4.dp)
         )
@@ -101,14 +102,14 @@ fun PostDetailScreen(context: Context, modifier: Modifier, station: GasStation, 
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Nome") },
+            label = { Text(stringResource(R.string.txt_nome)) },
             modifier = Modifier.fillMaxWidth()
         )
 
         OutlinedTextField(
             value = gasPrice,
             onValueChange = { gasPrice = it },
-            label = { Text("Preço Gasolina") },
+            label = { Text(stringResource(R.string.txt_preco_gas)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
         )
@@ -116,7 +117,7 @@ fun PostDetailScreen(context: Context, modifier: Modifier, station: GasStation, 
         OutlinedTextField(
             value = alcoholPrice,
             onValueChange = { alcoholPrice = it },
-            label = { Text("Preço Álcool") },
+            label = { Text(stringResource(R.string.txt_preco_alcool)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
         )
@@ -132,7 +133,7 @@ fun PostDetailScreen(context: Context, modifier: Modifier, station: GasStation, 
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Salvar")
+            Text(stringResource(R.string.btn_save))
         }
     }
 }

@@ -43,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -77,9 +78,9 @@ class MainActivity : ComponentActivity() {
 fun calcValue(gasPrice: Float, alcoholPrice: Float, percent: Int): String {
     val gasThreshold = gasPrice * (percent / 100.0f)
     return if (alcoholPrice <= gasThreshold) {
-        "Álcool é mais rentável"
+        R.string.alcool_respone.toString()
     } else {
-        "Gasolina é mais rentável"
+        R.string.gasoline_response.toString()
     }
 }
 fun saveSwitchState(context: Context, isChecked: Boolean) {
@@ -129,7 +130,7 @@ fun MainPage(modifier: Modifier) {
                         modifier = Modifier
                             .fillMaxWidth(),
                         painter = painterResource(R.drawable.image_banner),
-                        contentDescription = "Imagem do App"
+                        contentDescription = stringResource(R.string.app_image)
                     )
                     if (result.isNotBlank()) {
                         Box(
@@ -157,21 +158,21 @@ fun MainPage(modifier: Modifier) {
                 InputFieldThemeAdaptive(
                     value = alcoholInput,
                     onValueChange = { alcoholInput = it },
-                    label = "Insira o preço do álcool/litro",
+                    label = stringResource(R.string.field_inert_alc),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
 
                 InputFieldThemeAdaptive(
                     value = gasInput,
                     onValueChange = { gasInput = it },
-                    label = "Insira o preço da gasolina/litro",
+                    label = stringResource(R.string.field_insert_gas),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
 
                 InputFieldThemeAdaptive(
                     value = namePost,
                     onValueChange = { namePost = it },
-                    label = "Insira o nome do posto"
+                    label = stringResource(R.string.field_insert_post_name)
                 )
                 Row(
                     modifier = Modifier,
@@ -210,7 +211,7 @@ fun MainPage(modifier: Modifier) {
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                 ) {
-                    Text(text = "Calcular",
+                    Text(text = stringResource(R.string.txt_calc),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         style = AppTypography.bodyLarge
@@ -229,7 +230,7 @@ fun MainPage(modifier: Modifier) {
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                 ) {
-                    Text(text = "Salvar", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(text = stringResource(R.string.btn_save), fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
 
                 Button(
@@ -241,7 +242,7 @@ fun MainPage(modifier: Modifier) {
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                 ) {
-                    Text(text = "Ver Lista", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(text = stringResource(R.string.see_list), fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -264,7 +265,7 @@ fun savePost(context: Context, name: String, gas: String, alcohol: String) {
 fun MyTopBar() {
     TopAppBar(
         title = {
-            Text(text = "Gasolina ou Álcool?", style = AppTypography.titleLarge)
+            Text(text = "${stringResource(R.string.app_name)}?", style = AppTypography.titleLarge)
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.onPrimaryContainer,

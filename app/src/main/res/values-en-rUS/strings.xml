@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gasoline or Alcohol</string>
+    <string name="btn_save">Save</string>
+    <string name="txt_preco_alcool">Alcohol Price</string>
+    <string name="txt_preco_gas">Gasoline Price</string>
+    <string name="txt_nome">Name</string>
+    <string name="txt_creation_date">Creation date:</string>
+    <string name="btn_edit">Edit Gas Station</string>
+    <string name="alcool_respone">Alcohol is more cost-effective.</string>
+    <string name="gasoline_response">Gasoline is more cost-effective.</string>
+    <string name="app_image">App Image</string>
+    <string name="txt_calc">Calculate</string>
+    <string name="see_list">See list</string>
+    <string name="txt_edit">Edit</string>
+    <string name="txt_deletar">Delete</string>
+</resources>
