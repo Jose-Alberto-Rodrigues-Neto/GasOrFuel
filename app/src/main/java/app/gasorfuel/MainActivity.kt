@@ -1,6 +1,9 @@
 package app.gasorfuel
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,10 +30,10 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -38,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -45,8 +49,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.gasorfuel.manager.GasStationManager
+import app.gasorfuel.model.GasStation
 import app.gasorfuel.ui.theme.AppTheme
 import app.gasorfuel.ui.theme.AppTypography
+
+private const val PREFS_NAME = "app_preferences"
+private const val SWITCH_STATE_KEY = "switch_state"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +82,18 @@ fun calcValue(gasPrice: Float, alcoholPrice: Float, percent: Int): String {
         "Gasolina é mais rentável"
     }
 }
+fun saveSwitchState(context: Context, isChecked: Boolean) {
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    with(sharedPreferences.edit()) {
+        putBoolean(SWITCH_STATE_KEY, isChecked)
+        apply()
+    }
+}
+
+fun loadSwitchState(context: Context): Boolean {
+    val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    return sharedPreferences.getBoolean(SWITCH_STATE_KEY, false)
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -81,9 +102,15 @@ fun MainPage(modifier: Modifier) {
     var namePost by rememberSaveable { mutableStateOf("") }
     var gasInput by rememberSaveable { mutableStateOf("") }
     var alcoholInput by rememberSaveable { mutableStateOf("") }
-    var isChecked by rememberSaveable { mutableStateOf(false) }
     var result by rememberSaveable { mutableStateOf("") }
+
+    val context = LocalContext.current
+    var isChecked by rememberSaveable { mutableStateOf(loadSwitchState(context)) }
     val percent = if (isChecked) 75 else 70
+    LaunchedEffect(isChecked) {
+        saveSwitchState(context, isChecked)
+    }
+
 
     Scaffold(
         topBar = { MyTopBar() },
@@ -189,9 +216,46 @@ fun MainPage(modifier: Modifier) {
                         style = AppTypography.bodyLarge
                     )
                 }
+                Button(
+                    onClick = {
+                        if (namePost.isNotBlank() && gasInput.isNotBlank() && alcoholInput.isNotBlank()) {
+                            savePost(context, namePost, gasInput, alcoholInput)
+                            namePost = ""
+                            gasInput = ""
+                            alcoholInput = ""
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                ) {
+                    Text(text = "Salvar", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
+
+                Button(
+                    onClick = {
+                        val intent = Intent(context, PostListActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                ) {
+                    Text(text = "Ver Lista", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
             }
         }
     )
+}
+
+fun savePost(context: Context, name: String, gas: String, alcohol: String) {
+    val station = GasStation(
+        id = System.currentTimeMillis().toInt(),
+        name = name,
+        gasPrice = gas.toFloat(),
+        alcoholPrice = alcohol.toFloat(),
+        registrationDate = System.currentTimeMillis().toString())
+    GasStationManager.saveStation(context, station)
 }
 
 
