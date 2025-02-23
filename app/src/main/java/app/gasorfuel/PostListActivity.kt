@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -57,7 +59,9 @@ class PostListActivity : ComponentActivity() {
 @Composable
 fun PostListScreen(modifier: Modifier) {
     val context = LocalContext.current
-    val postList = remember { mutableStateListOf<GasStation>().apply { addAll(loadPostList(context)) } }
+    val postList =
+        remember { mutableStateListOf<GasStation>().apply { addAll(loadPostList(context)) } }
+    val goToMapsError = stringResource(R.string.strt_nav)
 
     val editLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -97,6 +101,18 @@ fun PostListScreen(modifier: Modifier) {
                             text = "${stringResource(R.string.txt_alc)}: R$${post.alcoholPrice}",
                             style = MaterialTheme.typography.bodyMedium
                         )
+                        Text(
+                            text = post.bestChoice,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Text(
+                            text = "${stringResource(R.string.txt_long)}: ${post.longitude}",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            text = "${stringResource(R.string.txt_lat)}: ${post.latitude}",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -107,13 +123,15 @@ fun PostListScreen(modifier: Modifier) {
                             ) {
                                 Button(
                                     onClick = {
-                                        val intent = Intent(context, PostDetailActivity::class.java).apply {
-                                            putExtra("POST_ID", post.id)
-                                        }
+                                        val intent =
+                                            Intent(context, PostDetailActivity::class.java).apply {
+                                                putExtra("POST_ID", post.id)
+                                            }
                                         editLauncher.launch(intent)
                                     },
                                     modifier = Modifier
                                         .fillMaxWidth()
+                                        .padding(top = 8.dp)
                                 ) {
                                     Text(text = stringResource(R.string.txt_edit))
                                 }
@@ -125,6 +143,26 @@ fun PostListScreen(modifier: Modifier) {
                                         .padding(top = 8.dp)
                                 ) {
                                     Text(text = stringResource(R.string.txt_deletar))
+                                }
+
+                                Button(
+                                    onClick = {
+                                        if (post.latitude != null && post.longitude != null) {
+                                            startNavigationToLocation(
+                                                context = context,
+                                                latitude = post.latitude,
+                                                longitude = post.longitude,
+                                                errorText = goToMapsError
+                                            )
+                                        } else {
+                                            Log.e("Location", "Latitude ou longitude estão nulos")
+                                        }
+                                    },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 8.dp)
+                                ) {
+                                    Text(text = stringResource(R.string.txt_goto))
                                 }
                             }
                         }
@@ -139,6 +177,7 @@ fun PostListScreen(modifier: Modifier) {
 fun loadPostList(context: Context): List<GasStation> {
     return GasStationManager.loadStations(context)
 }
+
 fun deleteStationList(context: Context, id: Int, postList: MutableList<GasStation>) {
     GasStationManager.deleteStation(context, id)
     postList.removeAll { it.id == id }

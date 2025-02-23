@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.location.Location
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -36,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -75,14 +77,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-fun calcValue(gasPrice: Float, alcoholPrice: Float, percent: Int): String {
+fun calcValue(gasPrice: Float, alcoholPrice: Float, percent: Int): Boolean {
     val gasThreshold = gasPrice * (percent / 100.0f)
     return if (alcoholPrice <= gasThreshold) {
-        R.string.alcool_respone.toString()
+        true //alcool_respone
     } else {
-        R.string.gasoline_response.toString()
+        false //gasoline_response
     }
 }
+
 fun saveSwitchState(context: Context, isChecked: Boolean) {
     val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     with(sharedPreferences.edit()) {
@@ -104,10 +107,17 @@ fun MainPage(modifier: Modifier) {
     var gasInput by rememberSaveable { mutableStateOf("") }
     var alcoholInput by rememberSaveable { mutableStateOf("") }
     var result by rememberSaveable { mutableStateOf("") }
-
     val context = LocalContext.current
     var isChecked by rememberSaveable { mutableStateOf(loadSwitchState(context)) }
     val percent = if (isChecked) 75 else 70
+    var location by remember { mutableStateOf<Location?>(null) }
+
+    RequestLocationPermission {
+        getUserLocation(context) { loc ->
+            location = loc
+        }
+    }
+
     LaunchedEffect(isChecked) {
         saveSwitchState(context, isChecked)
     }
@@ -116,6 +126,8 @@ fun MainPage(modifier: Modifier) {
     Scaffold(
         topBar = { MyTopBar() },
         content = {
+            val gasRespose = stringResource(R.string.gasoline_response)
+            val alcResponse = stringResource(R.string.alcool_respone)
             Column(
                 modifier = modifier
                     .fillMaxSize()
@@ -199,7 +211,12 @@ fun MainPage(modifier: Modifier) {
                         if (gasInput.isNotBlank() && alcoholInput.isNotBlank()) {
                             val gasPrice = gasInput.toFloatOrNull() ?: 0.0f
                             val alcoholPrice = alcoholInput.toFloatOrNull() ?: 0.0f
-                            result = calcValue(gasPrice, alcoholPrice, percent)
+                            val calc = calcValue(gasPrice, alcoholPrice, percent)
+                            result = if (calc){
+                                alcResponse
+                            }else{
+                                gasRespose
+                            }
                         } else {
                             result = ""
                         }
@@ -219,8 +236,9 @@ fun MainPage(modifier: Modifier) {
                 }
                 Button(
                     onClick = {
+
                         if (namePost.isNotBlank() && gasInput.isNotBlank() && alcoholInput.isNotBlank()) {
-                            savePost(context, namePost, gasInput, alcoholInput)
+                            savePost(context, namePost, gasInput, alcoholInput, result, location?.longitude, location?.latitude)
                             namePost = ""
                             gasInput = ""
                             alcoholInput = ""
@@ -249,13 +267,17 @@ fun MainPage(modifier: Modifier) {
     )
 }
 
-fun savePost(context: Context, name: String, gas: String, alcohol: String) {
+fun savePost(context: Context, name: String, gas: String, alcohol: String, bestChoice: String, longitude: Double?, latitude: Double?) {
     val station = GasStation(
         id = System.currentTimeMillis().toInt(),
         name = name,
         gasPrice = gas.toFloat(),
         alcoholPrice = alcohol.toFloat(),
-        registrationDate = System.currentTimeMillis().toString())
+        bestChoice = bestChoice ,
+        registrationDate = System.currentTimeMillis().toString(),
+        longitude = longitude,
+        latitude = latitude
+    )
     GasStationManager.saveStation(context, station)
 }
 

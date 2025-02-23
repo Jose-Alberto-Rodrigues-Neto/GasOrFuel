@@ -10,8 +10,21 @@
     <string name="alcool_respone">Alcohol is more cost-effective.</string>
     <string name="gasoline_response">Gasoline is more cost-effective.</string>
     <string name="app_image">App Image</string>
+    <string name="field_insert_post_name">Enter the name of the gas station.</string>
     <string name="txt_calc">Calculate</string>
     <string name="see_list">See list</string>
+    <string name="txt_alc">Alcohol</string>
     <string name="txt_edit">Edit</string>
     <string name="txt_deletar">Delete</string>
+    <string name="field_inert_alc">Enter the price of alcohol per liter.</string>
+    <string name="field_insert_gas">Enter the price of gasoline per liter.</string>
+    <string name="stations_list">List Gas Stations</string>
+    <string name="txt_gas">Gasoline</string>
+    <string name="txt_loc">Localization</string>
+    <string name="txt_long">Longitude</string>
+    <string name="txt_lat">Latitude</string>
+    <string name="permission_text">Access to location is required for this feature.</string>
+    <string name="permission_denied">Permission permanently denied. Go to settings to enable it</string>
+    <string name="strt_nav">Google Maps is not installed!</string>
+    <string name="txt_goto">Go to Gas Station</string>
 </resources>

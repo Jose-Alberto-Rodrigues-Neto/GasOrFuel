@@ -8,5 +8,8 @@ data class GasStation(
     val name: String,
     val gasPrice: Float,
     val alcoholPrice: Float,
+    val bestChoice: String,
     val registrationDate: String,
+    val longitude: Double?,
+    val latitude: Double?
 )
